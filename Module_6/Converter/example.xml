@@ -1,0 +1,7 @@
+<menu id="file" value="File">
+    <popup>
+        <menupopup name="Create" onclick="CreateDoc()" />
+        <menupopup name="Open" onclick="OpenDoc()" />
+        <menupopup name="Close" onclick="CloseDoc()" />
+    </popup>
+</menu>
