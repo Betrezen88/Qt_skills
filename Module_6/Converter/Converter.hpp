@@ -12,7 +12,6 @@ public:
     Converter();
 
     QJsonDocument xmlToJson(QXmlStreamReader &xml);
-
     QString xmlDocToString() { return m_xmlDoc.toString(); }
 
 private:
