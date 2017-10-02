@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "Converter.hpp"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -76,18 +77,10 @@ void MainWindow::fromXMLtoJSON()
 void MainWindow::readXML()
 {
     QXmlStreamReader xmlReader(m_inputEdit->toPlainText());
-    QJsonDocument jsonDoc;
-    QJsonObject jsonObj;
 
-    while (!xmlReader.atEnd())
-    {
-        xmlReader.readNextStartElement();
-        QJsonObject tmp;
-        if ( !xmlReader.isEndElement() && !xmlReader.name().isEmpty() )
-            jsonObj.insert(xmlReader.name().toString(), tmp);
-    }
+    Converter converter;
 
-    jsonDoc.setObject(jsonObj);
+    converter.xmlToJson( xmlReader );
 
-    m_outputEdit->setPlainText(jsonDoc.toJson());
+    m_outputEdit->setPlainText( converter.xmlDocToString() );
 }
