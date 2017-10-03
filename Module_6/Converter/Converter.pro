@@ -27,9 +27,11 @@ SOURCES += \
         main.cpp \
         MainWindow.cpp \
     Converter.cpp \
-    XmlConverter.cpp
+    XmlConverter.cpp \
+    JsonConverter.cpp
 
 HEADERS += \
         MainWindow.hpp \
     Converter.hpp \
-    XmlConverter.hpp
+    XmlConverter.hpp \
+    JsonConverter.hpp

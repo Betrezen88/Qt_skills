@@ -1,5 +1,6 @@
 #include "XmlConverter.hpp"
 
+#include <QJsonObject>
 #include <QJsonArray>
 
 XmlConverter::XmlConverter()

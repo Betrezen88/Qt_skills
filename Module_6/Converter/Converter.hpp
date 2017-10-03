@@ -4,7 +4,6 @@
 #include <QDomDocument>
 #include <QXmlStreamReader>
 #include <QJsonDocument>
-#include <QJsonObject>
 
 class Converter
 {
@@ -12,17 +11,18 @@ public:
     Converter();
 
     QString convert(QXmlStreamReader &xml);
-
-    QString xmlDocToString() { return m_xmlDoc.toString(); }
+    QString convert(QJsonDocument &json);
 
 protected:
-    void createXmlDoc(QXmlStreamReader &xml);
+    void createXmlDoc(QJsonDocument &json);
+    QDomNode toDomNode(const QString &key, const QJsonObject &object);
+    void addJsonArrayToNode(const QString &key, const QJsonArray &array, QDomElement &element);
 
+    void createXmlDoc(QXmlStreamReader &xml);
     void addNode(const QDomNode node, QDomNode &current);
     void closeNode(QDomNode &current);
     QDomNode toDomNode(const QXmlStreamReader &node);
     void addAttributes(QDomElement element, const QXmlStreamAttributes &attributes);
-
 
 protected:
     QDomDocument m_xmlDoc;

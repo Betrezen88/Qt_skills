@@ -1,10 +1,45 @@
 #include "Converter.hpp"
 
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
 
 Converter::Converter()
 {
 
+}
+
+void Converter::createXmlDoc(QJsonDocument &json)
+{
+    QDomNode current;
+    QJsonObject object = json.object();
+
+    foreach ( const QString &key, object.keys() ) {
+        if ( object.value(key).isObject() )
+            addNode( toDomNode(key, object.value(key).toObject()), current );
+    }
+}
+
+QDomNode Converter::toDomNode(const QString &key, const QJsonObject &object)
+{
+    QDomElement element = m_xmlDoc.createElement( key );
+
+    foreach ( const QString &key, object.keys() ) {
+        if ( object.value(key).isObject() )
+            element.appendChild( toDomNode(key, object.value(key).toObject()) );
+        else if ( object.value(key).isArray() )
+            addJsonArrayToNode( key, object.value(key).toArray(), element );
+        else if ( object.value(key).isString() )
+            element.setAttribute( key, object.value(key).toString() );
+    }
+
+    return element;
+}
+
+void Converter::addJsonArrayToNode(const QString &key, const QJsonArray &array, QDomElement &element)
+{
+    for ( int i=0; i<array.size(); ++i )
+        element.appendChild( toDomNode(key, array.at(i).toObject()) );
 }
 
 void Converter::createXmlDoc(QXmlStreamReader &xml)

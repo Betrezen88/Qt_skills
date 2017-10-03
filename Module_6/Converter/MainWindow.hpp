@@ -21,6 +21,7 @@ private:
     void fromJSONtoXML();
     void fromXMLtoJSON();
     void readXML();
+    void readJson();
 
 private:
     QWidget *m_centralWidget;

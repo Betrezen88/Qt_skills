@@ -1,6 +1,6 @@
 #include "MainWindow.hpp"
-#include "Converter.hpp"
 #include "XmlConverter.hpp"
+#include "JsonConverter.hpp"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -67,20 +67,26 @@ void MainWindow::translateInput()
 
 void MainWindow::fromJSONtoXML()
 {
-    readXML();
+    readJson();
 }
 
 void MainWindow::fromXMLtoJSON()
 {
-    qDebug() << "fromXMLtoJSON";
+    readXML();
 }
 
 void MainWindow::readXML()
 {
-    QXmlStreamReader xmlReader(m_inputEdit->toPlainText());
-
-//    Converter converter;
+    QXmlStreamReader xmlReader( m_inputEdit->toPlainText() );
     XmlConverter converter;
 
     m_outputEdit->setPlainText( converter.convert(xmlReader) );
+}
+
+void MainWindow::readJson()
+{
+    QJsonDocument jsonReader = QJsonDocument::fromJson( m_inputEdit->toPlainText().toLocal8Bit() );
+    JsonConverter converter;
+
+    m_outputEdit->setPlainText( converter.convert(jsonReader) );
 }
