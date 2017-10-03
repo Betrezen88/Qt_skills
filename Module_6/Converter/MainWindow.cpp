@@ -15,11 +15,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setWindowTitle("JSON & XML translator");
 
+    setMinimumSize( 700, 500 );
+
     m_centralWidget = new QWidget;
     m_translation = new QComboBox;
     m_inputEdit = new QTextEdit;
     m_outputEdit = new QTextEdit;
     m_translateBtn = new QPushButton("Translate");
+
+    m_translateBtn->setFixedWidth( 100 );
 
     m_translation->addItem("From JSON to XML");
     m_translation->addItem("From XML to JSON");
