@@ -26,12 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         MainWindow.cpp \
-    Converter.cpp \
-    XmlConverter.cpp \
-    JsonConverter.cpp
+        Converter.cpp \
+        XmlConverter.cpp \
+        JsonConverter.cpp
 
 HEADERS += \
         MainWindow.hpp \
-    Converter.hpp \
-    XmlConverter.hpp \
-    JsonConverter.hpp
+        Converter.hpp \
+        XmlConverter.hpp \
+        JsonConverter.hpp

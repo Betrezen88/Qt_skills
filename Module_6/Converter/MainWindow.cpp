@@ -2,6 +2,7 @@
 #include "XmlConverter.hpp"
 #include "JsonConverter.hpp"
 
+#include <QSpacerItem>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -14,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setWindowTitle("JSON & XML translator");
-
     setMinimumSize( 700, 500 );
 
     m_centralWidget = new QWidget;
@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *translateL = new QHBoxLayout;
     translateL->addWidget(new QLabel("Translate:"));
     translateL->addWidget(m_translation);
+    translateL->addStretch(1);
 
     QVBoxLayout *inputL = new QVBoxLayout;
     inputL->addWidget(new QLabel("Input:"));
