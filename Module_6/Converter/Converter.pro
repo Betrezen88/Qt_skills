@@ -26,8 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         MainWindow.cpp \
-    Converter.cpp
+    Converter.cpp \
+    XmlConverter.cpp
 
 HEADERS += \
         MainWindow.hpp \
-    Converter.hpp
+    Converter.hpp \
+    XmlConverter.hpp

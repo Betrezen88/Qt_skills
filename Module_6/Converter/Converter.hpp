@@ -11,23 +11,20 @@ class Converter
 public:
     Converter();
 
-    QJsonDocument xmlToJson(QXmlStreamReader &xml);
+    QString convert(QXmlStreamReader &xml);
+
     QString xmlDocToString() { return m_xmlDoc.toString(); }
 
-private:
+protected:
     void createXmlDoc(QXmlStreamReader &xml);
 
     void addNode(const QDomNode node, QDomNode &current);
     void closeNode(QDomNode &current);
     QDomNode toDomNode(const QXmlStreamReader &node);
     void addAttributes(QDomElement element, const QXmlStreamAttributes &attributes);
-    QStringList nodeChildsNames(const QDomNodeList &nodeChilds);
 
-    QJsonObject xmlDocToJson();
-    QJsonObject nodeToJson(const QDomNode &node);
-    void insertNodeAttributesToJson(QJsonObject &object, const QDomNamedNodeMap &attributes);
 
-private:
+protected:
     QDomDocument m_xmlDoc;
 };
 

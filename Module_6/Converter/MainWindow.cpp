@@ -1,5 +1,6 @@
 #include "MainWindow.hpp"
 #include "Converter.hpp"
+#include "XmlConverter.hpp"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -78,7 +79,8 @@ void MainWindow::readXML()
 {
     QXmlStreamReader xmlReader(m_inputEdit->toPlainText());
 
-    Converter converter;
+//    Converter converter;
+    XmlConverter converter;
 
-    m_outputEdit->setPlainText( converter.xmlToJson(xmlReader).toJson() );
+    m_outputEdit->setPlainText( converter.convert(xmlReader) );
 }
