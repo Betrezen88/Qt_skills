@@ -29,7 +29,8 @@ SOURCES += \
         Converter.cpp \
         XmlConverter.cpp \
         JsonConverter.cpp \
-    XmlToStructure.cpp
+    XmlToStructure.cpp \
+    StructureToJson.cpp
 
 HEADERS += \
         MainWindow.hpp \
@@ -38,4 +39,5 @@ HEADERS += \
         JsonConverter.hpp \
     XmlToStructure.hpp \
     StructureCreator.hpp \
-    StructureConverter.hpp
+    StructureConverter.hpp \
+    StructureToJson.hpp
