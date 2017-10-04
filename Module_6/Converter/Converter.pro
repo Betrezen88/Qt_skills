@@ -28,10 +28,13 @@ SOURCES += \
         MainWindow.cpp \
         Converter.cpp \
         XmlConverter.cpp \
-        JsonConverter.cpp
+        JsonConverter.cpp \
+    XmlToStructure.cpp
 
 HEADERS += \
         MainWindow.hpp \
         Converter.hpp \
         XmlConverter.hpp \
-        JsonConverter.hpp
+        JsonConverter.hpp \
+    XmlToStructure.hpp \
+    StructureCreator.hpp
