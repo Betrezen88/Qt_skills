@@ -68,7 +68,7 @@ void MainWindow::translateInput()
     if ( m_translation->currentIndex() == 0 )
         fromJSONtoXML();
     else
-        fromXMLtoJSON();
+        m_outputEdit->setPlainText( m_converter.xmlToJson(m_inputEdit->toPlainText()) );
 }
 
 void MainWindow::fromJSONtoXML()

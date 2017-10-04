@@ -6,6 +6,8 @@
 #include <QPushButton>
 #include <QTextEdit>
 
+#include "Converter.hpp"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -29,6 +31,7 @@ private:
     QPushButton *m_translateBtn;
     QTextEdit *m_inputEdit;
     QTextEdit *m_outputEdit;
+    Converter m_converter;
 };
 
 #endif // MAINWINDOW_HPP

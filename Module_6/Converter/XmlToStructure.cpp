@@ -23,7 +23,7 @@ void XmlToStructure::createStructure(const QString &content)
         reader.readNext();
 
         if ( reader.isStartElement() && !reader.name().isEmpty() )
-            addNode( , current );
+            addNode( toDomNode(reader) , current );
         else if ( reader.isEndElement() )
             closeNode( current );
     }
@@ -50,7 +50,7 @@ void XmlToStructure::closeNode(QDomNode &node)
 
 QDomNode XmlToStructure::toDomNode(const QXmlStreamReader &xml)
 {
-    QDomElement element = m_result.createElement( xml.name() );
+    QDomElement element = m_result.createElement( xml.name().toString() );
 
     if ( !xml.attributes().isEmpty() )
         addAttributes( element, xml.attributes() );

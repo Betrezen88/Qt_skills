@@ -5,10 +5,14 @@
 #include <QXmlStreamReader>
 #include <QJsonDocument>
 
+#include "StructureCreator.hpp"
+
 class Converter
 {
 public:
     Converter();
+
+    QString xmlToJson(const QString &content);
 
     QString convert(QXmlStreamReader &xml);
     QString convert(QJsonDocument &json);
@@ -27,8 +31,11 @@ protected:
     void addAttributes(QDomElement element, const QXmlStreamAttributes &attributes);
 
 protected:
+    QDomDocument m_structure;
+
     QDomDocument m_xmlDoc;
     QString m_result;
+
 };
 
 #endif // CONVERTER_HPP

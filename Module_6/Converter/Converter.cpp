@@ -1,5 +1,7 @@
 #include "Converter.hpp"
 
+#include "XmlToStructure.hpp"
+
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
@@ -7,6 +9,20 @@
 Converter::Converter()
 {
 
+}
+
+QString Converter::xmlToJson(const QString &content)
+{
+    {
+        XmlToStructure creator( content );
+
+        if ( !creator.error().isEmpty() )
+            return creator.error();
+
+        m_structure = creator.result();
+
+        return creator.result().toString();
+    }
 }
 
 void Converter::createXmlDoc(QJsonDocument &json)

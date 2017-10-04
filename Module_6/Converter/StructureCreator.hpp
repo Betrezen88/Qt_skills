@@ -12,7 +12,7 @@ public:
     QString error() { return m_error; }
 
 protected:
-    void createStructure(const QString &content)=0;
+    virtual void createStructure(const QString &content)=0;
 
 protected:
     QDomDocument m_result;
