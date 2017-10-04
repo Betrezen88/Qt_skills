@@ -50,10 +50,19 @@ void Converter::createXmlDoc(QXmlStreamReader &xml)
     {
         xml.readNext();
 
-        if ( xml.isStartElement() && !xml.name().isEmpty() )
+        if ( xml.isStartElement() && !xml.name().isEmpty() ) {
             addNode( toDomNode(xml), current );
-        else if ( xml.isEndElement()  )
+        }
+        else if ( xml.isEndElement()  ) {
             closeNode( current );
+        }
+
+        if ( xml.hasError() ) {
+            m_result = "Error in line: " + QString::number( xml.lineNumber() ) + "\n"
+                    + "   in column: " + QString::number( xml.columnNumber() ) + "\n"
+                    + "        offset: " + QString::number( xml.characterOffset() ) + "\n"
+                    + "Error message:\n   " + xml.errorString();
+        }
     }
 }
 

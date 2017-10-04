@@ -13,6 +13,8 @@ public:
     QString convert(QXmlStreamReader &xml);
     QString convert(QJsonDocument &json);
 
+    QString result() { return m_result; }
+
 protected:
     void createXmlDoc(QJsonDocument &json);
     QDomNode toDomNode(const QString &key, const QJsonObject &object);
@@ -26,6 +28,7 @@ protected:
 
 protected:
     QDomDocument m_xmlDoc;
+    QString m_result;
 };
 
 #endif // CONVERTER_HPP

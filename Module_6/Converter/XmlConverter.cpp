@@ -10,11 +10,15 @@ XmlConverter::XmlConverter()
 
 QString XmlConverter::convert(QXmlStreamReader &xml)
 {
+    m_result.clear();
     QJsonDocument jsonDoc;
     createXmlDoc(xml);
     jsonDoc.setObject( xmlDocToJson() );
 
-    return jsonDoc.toJson();
+    if ( m_result.isEmpty() )
+        m_result = jsonDoc.toJson();
+
+    return m_result;
 }
 
 QJsonObject XmlConverter::xmlDocToJson()
