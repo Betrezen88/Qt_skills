@@ -22,6 +22,12 @@ void XmlToStructure::createStructure(const QString &content)
     {
         reader.readNext();
 
+        if ( reader.hasError() )
+        {
+            createErrorMessage( reader );
+            break;
+        }
+
         if ( reader.isStartElement() && !reader.name().isEmpty() )
             addNode( toDomNode(reader) , current );
         else if ( reader.isEndElement() )
@@ -62,4 +68,12 @@ void XmlToStructure::addAttributes(QDomElement &element, const QXmlStreamAttribu
 {
     for ( int i=0; i<attributes.size(); ++i )
         element.setAttribute( attributes.at(i).name().toString(), attributes.at(i).value().toString() );
+}
+
+void XmlToStructure::createErrorMessage(const QXmlStreamReader &xml)
+{
+    m_error = "Error occured in line: " + QString::number( xml.lineNumber() )
+            + "\n                 in column: " + QString::number( xml.columnNumber() )
+            + "\n      character offset: " + QString::number( xml.characterOffset() )
+            + "\n\nError message: " + xml.errorString();
 }

@@ -19,6 +19,7 @@ private:
     void closeNode(QDomNode &node);
     QDomNode toDomNode(const QXmlStreamReader &xml);
     void addAttributes(QDomElement &element, const QXmlStreamAttributes &attributes);
+    void createErrorMessage(const QXmlStreamReader &xml);
 };
 
 #endif // XMLTOSTRUCTURE_HPP
