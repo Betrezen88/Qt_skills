@@ -1,5 +1,4 @@
 #include "MainWindow.hpp"
-#include "XmlConverter.hpp"
 #include "JsonConverter.hpp"
 
 #include <QSpacerItem>
@@ -74,19 +73,6 @@ void MainWindow::translateInput()
 void MainWindow::fromJSONtoXML()
 {
     readJson();
-}
-
-void MainWindow::fromXMLtoJSON()
-{
-    readXML();
-}
-
-void MainWindow::readXML()
-{
-    QXmlStreamReader xmlReader( m_inputEdit->toPlainText() );
-    XmlConverter converter;
-
-    m_outputEdit->setPlainText( converter.convert(xmlReader) );
 }
 
 void MainWindow::readJson()

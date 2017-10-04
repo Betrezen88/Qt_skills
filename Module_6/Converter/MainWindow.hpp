@@ -21,8 +21,6 @@ public slots:
 
 private:
     void fromJSONtoXML();
-    void fromXMLtoJSON();
-    void readXML();
     void readJson();
 
 private:
