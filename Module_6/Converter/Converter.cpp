@@ -14,10 +14,9 @@ void Converter::createXmlDoc(QJsonDocument &json)
     QDomNode current;
     QJsonObject object = json.object();
 
-    foreach ( const QString &key, object.keys() ) {
+    foreach ( const QString &key, object.keys() )
         if ( object.value(key).isObject() )
             addNode( toDomNode(key, object.value(key).toObject()), current );
-    }
 }
 
 QDomNode Converter::toDomNode(const QString &key, const QJsonObject &object)

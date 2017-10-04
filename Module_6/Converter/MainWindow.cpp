@@ -9,6 +9,7 @@
 #include <QXmlStreamReader>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonParseError>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -90,8 +91,13 @@ void MainWindow::readXML()
 
 void MainWindow::readJson()
 {
-    QJsonDocument jsonReader = QJsonDocument::fromJson( m_inputEdit->toPlainText().toLocal8Bit() );
+    QJsonParseError error;
+    QJsonDocument jsonReader = QJsonDocument::fromJson( m_inputEdit->toPlainText().toLocal8Bit(), &error );
     JsonConverter converter;
 
-    m_outputEdit->setPlainText( converter.convert(jsonReader) );
+    QString result = ( error.error == QJsonParseError::NoError ) ?
+                converter.convert(jsonReader) :
+                "Error: " + error.errorString() + " in offset " + QString::number( error.offset );
+
+    m_outputEdit->setPlainText( result );
 }

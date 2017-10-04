@@ -7,6 +7,8 @@ JsonConverter::JsonConverter()
 
 QString JsonConverter::convert(QJsonDocument &json)
 {
+    m_result.clear();
     createXmlDoc( json );
-    return m_xmlDoc.toString();
+    m_result = m_xmlDoc.toString();
+    return m_result;
 }
