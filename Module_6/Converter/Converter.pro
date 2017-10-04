@@ -37,4 +37,5 @@ HEADERS += \
         XmlConverter.hpp \
         JsonConverter.hpp \
     XmlToStructure.hpp \
-    StructureCreator.hpp
+    StructureCreator.hpp \
+    StructureConverter.hpp
