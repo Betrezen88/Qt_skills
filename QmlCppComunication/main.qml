@@ -10,7 +10,7 @@ Window {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            console.log(qsTr('Clicked on background. Text: "' + textEdit.text + '"'))
+            Message.message = textEdit.text;
         }
     }
 
@@ -19,6 +19,21 @@ Window {
         text: qsTr("Enter some text...")
         verticalAlignment: Text.AlignVCenter
         anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 20
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: -10
+            color: "transparent"
+            border.width: 1
+        }
+    }
+
+    TextEdit {
+        id: output
+        text: "Changed: " + Message.counter + " | " + Message.message
+        verticalAlignment: Text.AlignVCenter
+        anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 20
         Rectangle {
