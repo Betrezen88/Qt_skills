@@ -1,5 +1,4 @@
 #include "MainWindow.hpp"
-#include "JsonConverter.hpp"
 
 #include <QSpacerItem>
 #include <QVBoxLayout>
@@ -65,25 +64,7 @@ void MainWindow::translateInput()
 {
     m_outputEdit->clear();
     if ( m_translation->currentIndex() == 0 )
-        fromJSONtoXML();
+        m_outputEdit->setPlainText( m_converter.jsonToXml(m_inputEdit->toPlainText()) );
     else
         m_outputEdit->setPlainText( m_converter.xmlToJson(m_inputEdit->toPlainText()) );
-}
-
-void MainWindow::fromJSONtoXML()
-{
-    readJson();
-}
-
-void MainWindow::readJson()
-{
-    QJsonParseError error;
-    QJsonDocument jsonReader = QJsonDocument::fromJson( m_inputEdit->toPlainText().toLocal8Bit(), &error );
-    JsonConverter converter;
-
-    QString result = ( error.error == QJsonParseError::NoError ) ?
-                converter.convert(jsonReader) :
-                "Error: " + error.errorString() + " in offset " + QString::number( error.offset );
-
-    m_outputEdit->setPlainText( result );
 }

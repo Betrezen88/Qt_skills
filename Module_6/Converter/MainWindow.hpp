@@ -20,10 +20,6 @@ public slots:
     void translateInput();
 
 private:
-    void fromJSONtoXML();
-    void readJson();
-
-private:
     QWidget *m_centralWidget;
     QComboBox *m_translation;
     QPushButton *m_translateBtn;
