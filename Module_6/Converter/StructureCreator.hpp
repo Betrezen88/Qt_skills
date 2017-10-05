@@ -8,15 +8,17 @@ class StructureCreator
 public:
     virtual ~StructureCreator() {}
 
-    QDomDocument result() { return m_result; }
+    QDomDocument structure() { return m_structure; }
     QString error() { return m_error; }
+    bool success() { return m_success; }
 
 protected:
-    virtual void createStructure(const QString &content)=0;
+    virtual bool createStructure(const QString &content)=0;
 
 protected:
-    QDomDocument m_result;
+    QDomDocument m_structure;
     QString m_error;
+    bool m_success;
 };
 
 #endif // STRUCTURECREATOR_HPP

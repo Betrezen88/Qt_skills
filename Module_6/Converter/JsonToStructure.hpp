@@ -14,7 +14,7 @@ public:
     ~JsonToStructure();
 
 protected:
-    void createStructure(const QString &content);
+    bool createStructure(const QString &content);
     void addNode(const QDomNode node, QDomNode &current);
     void addArray(const QString &key, const QJsonArray &array, QDomElement &element);
     void closeNode(QDomNode &node);

@@ -18,10 +18,10 @@ QString Converter::xmlToJson(const QString &content)
     {
         XmlToStructure creator( content );
 
-        if ( !creator.error().isEmpty() )
+        if ( !creator.success() )
             return creator.error();
 
-        m_structure = creator.result();
+        m_structure = creator.structure();
     }
     StructureToJson converter( m_structure );
     return converter.resutl();
@@ -32,10 +32,10 @@ QString Converter::jsonToXml(const QString &content)
     {
         JsonToStructure creator( content );
 
-        if ( !creator.error().isEmpty() )
+        if ( !creator.success() )
             return creator.error();
 
-        m_structure = creator.result();
+        m_structure = creator.structure();
     }
     return m_structure.toString();
 }

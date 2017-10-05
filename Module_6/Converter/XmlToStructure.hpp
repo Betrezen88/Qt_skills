@@ -12,7 +12,7 @@ public:
     ~XmlToStructure();
 
 protected:
-    void createStructure(const QString &content);
+    bool createStructure(const QString &content);
 
 private:
     void addNode(const QDomNode node, QDomNode &current);

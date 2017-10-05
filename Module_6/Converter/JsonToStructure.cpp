@@ -5,7 +5,7 @@
 
 JsonToStructure::JsonToStructure(const QString &content)
 {
-    createStructure( content );
+    m_success = createStructure( content );
 }
 
 JsonToStructure::~JsonToStructure()
@@ -13,7 +13,7 @@ JsonToStructure::~JsonToStructure()
 
 }
 
-void JsonToStructure::createStructure(const QString &content)
+bool JsonToStructure::createStructure(const QString &content)
 {
     QJsonParseError error;
     QJsonDocument json = QJsonDocument::fromJson( content.toLocal8Bit(), &error );
@@ -30,20 +30,24 @@ void JsonToStructure::createStructure(const QString &content)
         }
     }
     else
+    {
         createErrorMessage( error );
+        return false;
+    }
+    return true;
 }
 
 void JsonToStructure::addNode(const QDomNode node, QDomNode &current)
 {
-    if ( !m_result.childNodes().isEmpty() )
+    if ( !m_structure.childNodes().isEmpty() )
     {
         current.appendChild( node );
         current = current.lastChild();
     }
     else
     {
-        m_result.appendChild( node );
-        current = m_result.lastChild();
+        m_structure.appendChild( node );
+        current = m_structure.lastChild();
     }
 }
 
@@ -60,7 +64,7 @@ void JsonToStructure::closeNode(QDomNode &node)
 
 QDomNode JsonToStructure::toDomNode(const QString &key, const QJsonObject &object)
 {
-    QDomElement element = m_result.createElement( key );
+    QDomElement element = m_structure.createElement( key );
 
     foreach ( const QString &key, object.keys() )
     {
