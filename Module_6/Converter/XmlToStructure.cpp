@@ -33,25 +33,6 @@ bool XmlToStructure::createStructure(const QString &content)
     return true;
 }
 
-void XmlToStructure::addNode(const QDomNode node, QDomNode &current)
-{
-    if ( !m_structure.childNodes().isEmpty() )
-    {
-        current.appendChild( node );
-        current = current.lastChild();
-    }
-    else
-    {
-        m_structure.appendChild( node );
-        current = m_structure.lastChild();
-    }
-}
-
-void XmlToStructure::closeNode(QDomNode &node)
-{
-    node = node.parentNode();
-}
-
 QDomNode XmlToStructure::toDomNode(const QXmlStreamReader &xml)
 {
     QDomElement element = m_structure.createElement( xml.name().toString() );

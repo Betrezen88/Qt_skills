@@ -15,6 +15,25 @@ public:
 protected:
     virtual bool createStructure(const QString &content)=0;
 
+    void addNode(const QDomNode node, QDomNode &current)
+    {
+        if ( !m_structure.childNodes().isEmpty() )
+        {
+            current.appendChild( node );
+            current = current.lastChild();
+        }
+        else
+        {
+            m_structure.appendChild( node );
+            current = m_structure.lastChild();
+        }
+    }
+
+    void closeNode(QDomNode &node)
+    {
+        node = node.parentNode();
+    }
+
 protected:
     QDomDocument m_structure;
     QString m_error;

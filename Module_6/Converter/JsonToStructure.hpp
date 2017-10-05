@@ -15,9 +15,7 @@ public:
 
 protected:
     bool createStructure(const QString &content);
-    void addNode(const QDomNode node, QDomNode &current);
     void addArray(const QString &key, const QJsonArray &array, QDomElement &element);
-    void closeNode(QDomNode &node);
     QDomNode toDomNode(const QString &key, const QJsonObject &object);
     void createErrorMessage(const QJsonParseError &error);
 };

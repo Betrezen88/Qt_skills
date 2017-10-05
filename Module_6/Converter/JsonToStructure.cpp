@@ -37,29 +37,10 @@ bool JsonToStructure::createStructure(const QString &content)
     return true;
 }
 
-void JsonToStructure::addNode(const QDomNode node, QDomNode &current)
-{
-    if ( !m_structure.childNodes().isEmpty() )
-    {
-        current.appendChild( node );
-        current = current.lastChild();
-    }
-    else
-    {
-        m_structure.appendChild( node );
-        current = m_structure.lastChild();
-    }
-}
-
 void JsonToStructure::addArray(const QString &key, const QJsonArray &array, QDomElement &element)
 {
     for ( int i=0; i<array.size(); ++i )
         element.appendChild( toDomNode(key, array.at(i).toObject()) );
-}
-
-void JsonToStructure::closeNode(QDomNode &node)
-{
-    node = node.parentNode();
 }
 
 QDomNode JsonToStructure::toDomNode(const QString &key, const QJsonObject &object)
