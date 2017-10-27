@@ -17,8 +17,10 @@ MainDialog::MainDialog(QWidget *parent)
     m_progressBar = new QProgressBar();
 
     m_elements->setValidator( new QIntValidator(1, 9999999, this) );
+    enableGenerateBtn( m_elements->text() );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &QDialog::close );
+    connect( m_elements, &QLineEdit::textChanged, this, &MainDialog::enableGenerateBtn );
 
     QHBoxLayout *generateL = new QHBoxLayout();
     generateL->addWidget( elements );
@@ -42,6 +44,21 @@ MainDialog::MainDialog(QWidget *parent)
 }
 
 MainDialog::~MainDialog()
+{
+
+}
+
+void MainDialog::enableGenerateBtn(const QString &value)
+{
+    m_generateBtn->setEnabled( value.toInt() > 0 );
+}
+
+void MainDialog::generateArray()
+{
+    m_array.clear();
+}
+
+void MainDialog::sumArray()
 {
 
 }
