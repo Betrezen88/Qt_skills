@@ -28,4 +28,5 @@ SOURCES += \
         MainDialog.cpp
 
 HEADERS += \
-        MainDialog.h
+        MainDialog.h \
+    Generator.h

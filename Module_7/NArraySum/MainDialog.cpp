@@ -1,5 +1,7 @@
 #include "MainDialog.h"
+#include "Generator.h"
 
+#include <QThreadPool>
 #include <QIntValidator>
 #include <QLabel>
 #include <QHBoxLayout>
@@ -8,6 +10,7 @@ MainDialog::MainDialog(QWidget *parent)
     : QDialog(parent)
 {
     m_sum = 0;
+    m_threadPool = QThreadPool::globalInstance();
     QLabel *elements = new QLabel( "How many elements:" );
     QLabel *sum = new QLabel( QString("Sum: %1").arg(m_sum) );
     m_elements = new QLineEdit();
@@ -21,6 +24,7 @@ MainDialog::MainDialog(QWidget *parent)
 
     connect( m_quitBtn, &QPushButton::clicked, this, &QDialog::close );
     connect( m_elements, &QLineEdit::textChanged, this, &MainDialog::enableGenerateBtn );
+    connect( m_generateBtn, &QPushButton::clicked, this, &MainDialog::generateArray );
 
     QHBoxLayout *generateL = new QHBoxLayout();
     generateL->addWidget( elements );
@@ -55,7 +59,10 @@ void MainDialog::enableGenerateBtn(const QString &value)
 
 void MainDialog::generateArray()
 {
-    m_array.clear();
+    m_array = QVector<int>( m_elements->text().toInt() );
+    Generator *gen = new Generator(m_array);
+
+    m_threadPool->start( gen );
 }
 
 void MainDialog::sumArray()

@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QVector>
+#include <QThreadPool>
 
 class MainDialog : public QDialog
 {
@@ -27,7 +28,8 @@ private:
     QPushButton *m_sumBtn;
     QPushButton *m_quitBtn;
     qint64 m_sum;
-    QVector m_array;
+    QVector<int> m_array;
+    QThreadPool *m_threadPool;
 };
 
 #endif // MAINDIALOG_H
