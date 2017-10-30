@@ -16,15 +16,19 @@ public:
 
     void run()
     {
-        QVector<int> array;
+        QVector<int> array = QVector<int>( m_size );
         qsrand( QTime::currentTime().msec() );
         for ( int i=0; i<m_size; ++i )
+        {
              array.append( qrand() % 1000 + 1 );
+             emit update( i+1 );
+        }
         emit finished( array );
     }
 
 signals:
     void finished(QVector<int> array);
+    void update(int value);
 
 private:
     int m_size;

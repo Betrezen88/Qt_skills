@@ -15,12 +15,16 @@ public:
     {
         int sum = 0;
         for ( int i=0; i<m_array.size(); ++i )
+        {
             sum += m_array.at(i);
+            emit update( i+1 );
+        }
         finished( sum );
     }
 
 signals:
     void finished(const int sum);
+    void update(int value);
 
 private:
     QVector<int> m_array;

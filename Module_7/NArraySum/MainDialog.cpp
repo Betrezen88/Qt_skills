@@ -20,7 +20,7 @@ MainDialog::MainDialog(QWidget *parent)
     m_quitBtn = new QPushButton( "Quit" );
     m_progressBar = new QProgressBar();
 
-    m_elements->setValidator( new QIntValidator(1, 9999999, this) );
+    m_elements->setValidator( new QIntValidator(1, 100000, this) );
     enableGenerateBtn( m_elements->text() );
     m_progressBar->setMinimum( 0 );
 
@@ -66,6 +66,7 @@ void MainDialog::generateArray()
     m_progressBar->setMaximum( m_elements->text().toInt() );
     Generator *gen = new Generator( m_elements->text().toInt() );
 
+    connect( gen, &Generator::update, m_progressBar, &QProgressBar::setValue );
     connect( gen, &Generator::finished, this, &MainDialog::assignArray );
 
     m_threadPool->start( gen );
@@ -75,6 +76,7 @@ void MainDialog::sumArray()
 {
     Adder *adder = new Adder( m_array );
 
+    connect( adder, &Adder::update, m_progressBar, &QProgressBar::setValue );
     connect( adder, &Adder::finished, this, &MainDialog::assignSum );
 
     m_threadPool->start( adder );
