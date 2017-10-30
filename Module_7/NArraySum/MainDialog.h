@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QVector>
 #include <QThreadPool>
+#include <QLabel>
 
 class MainDialog : public QDialog
 {
@@ -21,8 +22,10 @@ public slots:
     void generateArray();
     void sumArray();
     void assignArray(QVector<int> array);
+    void assignSum(const int sum);
 
 private:
+    QLabel *m_sumLabel;
     QProgressBar *m_progressBar;
     QLineEdit *m_elements;
     QPushButton *m_generateBtn;

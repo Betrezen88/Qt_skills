@@ -29,4 +29,5 @@ SOURCES += \
 
 HEADERS += \
         MainDialog.h \
-    Generator.h
+    Generator.h \
+    Adder.h
