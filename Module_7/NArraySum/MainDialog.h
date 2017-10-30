@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QThreadPool>
 #include <QLabel>
+#include <QStatusBar>
 
 class MainDialog : public QDialog
 {
@@ -34,6 +35,7 @@ private:
     qint64 m_sum;
     QVector<int> m_array;
     QThreadPool *m_threadPool;
+    QStatusBar *m_statusBar;
 };
 
 #endif // MAINDIALOG_H

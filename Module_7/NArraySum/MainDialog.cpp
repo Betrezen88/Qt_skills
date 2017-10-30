@@ -19,10 +19,12 @@ MainDialog::MainDialog(QWidget *parent)
     m_sumBtn = new QPushButton( "Sum" );
     m_quitBtn = new QPushButton( "Quit" );
     m_progressBar = new QProgressBar();
+    m_statusBar = new QStatusBar();
 
     m_elements->setValidator( new QIntValidator(1, 100000, this) );
     enableGenerateBtn( m_elements->text() );
     m_progressBar->setMinimum( 0 );
+    m_statusBar->showMessage( "Ready" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &QDialog::close );
     connect( m_elements, &QLineEdit::textChanged, this, &MainDialog::enableGenerateBtn );
@@ -46,6 +48,7 @@ MainDialog::MainDialog(QWidget *parent)
     all->addLayout( generateL );
     all->addLayout( sumL );
     all->addLayout( resultL );
+    all->addWidget( m_statusBar );
 
     setLayout( all );
 }
@@ -62,6 +65,7 @@ void MainDialog::enableGenerateBtn(const QString &value)
 
 void MainDialog::generateArray()
 {
+    m_statusBar->showMessage( "Generating array..." );
     qRegisterMetaType<QVector<int>>();
     m_progressBar->setMaximum( m_elements->text().toInt() );
     Generator *gen = new Generator( m_elements->text().toInt() );
@@ -74,6 +78,7 @@ void MainDialog::generateArray()
 
 void MainDialog::sumArray()
 {
+    m_statusBar->showMessage( "Adding array..." );
     Adder *adder = new Adder( m_array );
 
     connect( adder, &Adder::update, m_progressBar, &QProgressBar::setValue );
@@ -85,10 +90,12 @@ void MainDialog::sumArray()
 void MainDialog::assignArray(QVector<int> array)
 {
     m_array = array;
+    m_statusBar->showMessage( "Generating array done !" );
 }
 
 void MainDialog::assignSum(const int sum)
 {
     m_sum = sum;
     m_sumLabel->setText( QString("Sum: %1").arg(m_sum) );
+    m_statusBar->showMessage( "Adding array done !" );
 }
