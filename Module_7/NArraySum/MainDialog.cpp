@@ -59,8 +59,10 @@ void MainDialog::enableGenerateBtn(const QString &value)
 
 void MainDialog::generateArray()
 {
-    m_array = QVector<int>( m_elements->text().toInt() );
-    Generator *gen = new Generator(m_array);
+    qRegisterMetaType<QVector<int>>();
+    Generator *gen = new Generator( m_elements->text().toInt() );
+
+    connect( gen, &Generator::finished, this, &MainDialog::assignArray );
 
     m_threadPool->start( gen );
 }
@@ -68,4 +70,9 @@ void MainDialog::generateArray()
 void MainDialog::sumArray()
 {
 
+}
+
+void MainDialog::assignArray(QVector<int> array)
+{
+    m_array = array;
 }

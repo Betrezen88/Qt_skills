@@ -20,6 +20,7 @@ public slots:
     void enableGenerateBtn(const QString &value);
     void generateArray();
     void sumArray();
+    void assignArray(QVector<int> array);
 
 private:
     QProgressBar *m_progressBar;
