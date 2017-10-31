@@ -28,4 +28,5 @@ SOURCES += \
         Dialog.cpp
 
 HEADERS += \
-        Dialog.h
+        Dialog.h \
+    WorkerThread.h
