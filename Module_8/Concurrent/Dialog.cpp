@@ -1,11 +1,13 @@
 #include "Dialog.h"
+#include "external.h"
 
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QtConcurrent/QtConcurrent>
 #include <QFuture>
+#include <QString>
 
-int externalFunction();
+//extern QString function();
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -59,5 +61,6 @@ void Dialog::runExample()
 
 void Dialog::exampleConcurrentRun()
 {
-    m_resultView->setText( "exampleConcurrentRun()" );
+    QFuture<QString> future = QtConcurrent::run( myFunction );
+    m_resultView->setText( future.result() );
 }
