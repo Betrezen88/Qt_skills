@@ -1,4 +1,5 @@
 #include "Dialog.h"
+#include "WorkerThread.h"
 
 #include <QVBoxLayout>
 #include <QLabel>
@@ -15,6 +16,7 @@ Dialog::Dialog(QWidget *parent)
     m_statusBar->showMessage( "Ready" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &Dialog::close );
+    connect( m_runBtn, &QPushButton::clicked, this, &Dialog::startWorker );
 
     QVBoxLayout *resultL = new QVBoxLayout();
     resultL->addWidget( new QLabel("Result:") );
@@ -35,4 +37,14 @@ Dialog::Dialog(QWidget *parent)
 Dialog::~Dialog()
 {
 
+}
+
+void Dialog::startWorker()
+{
+    WorkerThread *worker = new WorkerThread();
+
+    connect( worker, &WorkerThread::resultReady, m_resultView, &QTextEdit::setText );
+    connect( worker, &WorkerThread::finished, worker, &WorkerThread::deleteLater );
+
+    worker->start();
 }

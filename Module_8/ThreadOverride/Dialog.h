@@ -14,6 +14,9 @@ public:
     Dialog(QWidget *parent = 0);
     ~Dialog();
 
+public slots:
+    void startWorker();
+
 private:
     QPushButton *m_quitBtn;
     QPushButton *m_runBtn;
