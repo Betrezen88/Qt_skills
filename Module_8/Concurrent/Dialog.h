@@ -2,6 +2,9 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QComboBox>
 
 class Dialog : public QDialog
 {
@@ -10,6 +13,18 @@ class Dialog : public QDialog
 public:
     Dialog(QWidget *parent = 0);
     ~Dialog();
+
+private slots:
+    void runExample();
+
+private:
+    void exampleConcurrentRun();
+
+private:
+    QPushButton *m_quitBtn;
+    QPushButton *m_runBtn;
+    QTextEdit *m_resultView;
+    QComboBox *m_exampleBox;
 };
 
 #endif // DIALOG_H
