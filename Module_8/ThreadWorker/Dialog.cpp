@@ -1,5 +1,7 @@
 #include "Dialog.h"
+#include "Worker.h"
 
+#include <QThread>
 #include <QLabel>
 #include <QVBoxLayout>
 
@@ -37,5 +39,15 @@ Dialog::~Dialog()
 
 void Dialog::startWorker()
 {
+    QThread *thread = new QThread;
+    Worker *worker = new Worker();
+    worker->moveToThread( thread );
 
+    connect( thread, &QThread::started, worker, &Worker::process );
+    connect( worker, &Worker::resultReady, m_resultView, &QTextEdit::setText );
+    connect( worker, &Worker::finished, thread, &QThread::quit );
+    connect( worker, &Worker::finished, worker, &Worker::deleteLater );
+    connect( thread, &QThread::finished, thread, &QThread::deleteLater );
+
+    thread->start();
 }
