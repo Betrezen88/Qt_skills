@@ -6,6 +6,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QFuture>
 #include <QString>
+#include <QStringList>
 
 //extern QString function();
 
@@ -19,6 +20,7 @@ Dialog::Dialog(QWidget *parent)
 
     m_resultView->setReadOnly( true );
     m_exampleBox->addItem( "QtConcurrent::run(aFunction)" );
+    m_exampleBox->addItem( "Qt::Concurrent::filtered()" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &Dialog::close );
     connect( m_runBtn, &QPushButton::clicked, this, &Dialog::runExample );
@@ -54,6 +56,9 @@ void Dialog::runExample()
     case 0:
         exampleConcurrentRun();
         break;
+    case 1:
+        exampleFiltered();
+        break;
     default:
         break;
     }
@@ -63,4 +68,17 @@ void Dialog::exampleConcurrentRun()
 {
     QFuture<QString> future = QtConcurrent::run( myFunction );
     m_resultView->setText( future.result() );
+}
+
+void Dialog::exampleFiltered()
+{
+    QStringList strings;
+    strings << "small" << "Big" << "smaller" << "Bigger" << "smallest" << "Biggest";
+
+    QFuture<QString> lowerStrings = QtConcurrent::filtered( strings, isLowerCase );
+    m_resultView->setText(
+                "QtConcurrent:filtered(), show how to execute method in seperate thread. Method accepts QStringList and QFuture as a result returns QList<QString> with lower cap.\n\nUnfiltered strings: "
+                + strings.join(", ")
+                + "\n\nFiltered strings: " + QStringList( lowerStrings.results() ).join(", ")
+            );
 }

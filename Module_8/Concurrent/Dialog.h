@@ -19,6 +19,7 @@ private slots:
 
 private:
     void exampleConcurrentRun();
+    void exampleFiltered();
 
 private:
     QPushButton *m_quitBtn;

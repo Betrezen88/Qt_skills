@@ -33,4 +33,9 @@ QString myFunction()
     return result;
 }
 
+bool isLowerCase(const QString &string)
+{
+    return string.toLower() == string;
+}
+
 #endif // EXTERNAL_H
