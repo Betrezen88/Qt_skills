@@ -7,8 +7,9 @@
 #include <QFuture>
 #include <QString>
 #include <QStringList>
+#include <QTime>
 
-//extern QString function();
+#include <QDebug>
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -20,6 +21,7 @@ Dialog::Dialog(QWidget *parent)
 
     m_resultView->setReadOnly( true );
     m_exampleBox->addItem( "QtConcurrent::run(aFunction)" );
+    m_exampleBox->addItem( "QtConcurrent::filter()" );
     m_exampleBox->addItem( "Qt::Concurrent::filtered()" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &Dialog::close );
@@ -57,6 +59,9 @@ void Dialog::runExample()
         exampleConcurrentRun();
         break;
     case 1:
+        exampleFilter();
+        break;
+    case 2:
         exampleFiltered();
         break;
     default:
@@ -68,6 +73,27 @@ void Dialog::exampleConcurrentRun()
 {
     QFuture<QString> future = QtConcurrent::run( myFunction );
     m_resultView->setText( future.result() );
+}
+
+void Dialog::exampleFilter()
+{
+    QString result = "QtConcurrent::filter(), shows how to filter container by method. Method checks if value is bigger than 10. \n\nVector before filter: ";
+    QVector<int> array;
+    qsrand( QTime::currentTime().msec() );
+    for ( int i=0; i<10; ++i ) {
+        array.append( qrand() % 20 + 1 );
+        result += QString::number( array.at(i) ) + ", ";
+    }
+
+    QFuture<void> future = QtConcurrent::filter( array, lessThen10 );
+
+    future.waitForFinished();
+
+    result += "\n\nVector after filter: ";
+    for( int i=0; i<array.size(); ++i )
+        result += QString::number( array.at(i) ) + ", ";
+
+    m_resultView->setText( result );
 }
 
 void Dialog::exampleFiltered()

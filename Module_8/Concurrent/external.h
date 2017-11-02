@@ -38,4 +38,9 @@ bool isLowerCase(const QString &string)
     return string.toLower() == string;
 }
 
+bool lessThen10(int value)
+{
+    return value < 10;
+}
+
 #endif // EXTERNAL_H

@@ -19,6 +19,7 @@ private slots:
 
 private:
     void exampleConcurrentRun();
+    void exampleFilter();
     void exampleFiltered();
 
 private:
