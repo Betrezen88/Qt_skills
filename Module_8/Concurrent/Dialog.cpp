@@ -44,6 +44,7 @@ Dialog::Dialog(QWidget *parent)
     all->addLayout( exampleL );
     all->addLayout( buttonsL );
 
+    setMinimumSize(500, 500);
     setLayout( all );
 }
 
@@ -77,7 +78,7 @@ void Dialog::exampleConcurrentRun()
 
 void Dialog::exampleFilter()
 {
-    QString result = "QtConcurrent::filter(), shows how to filter container by method. Method checks if value is bigger than 10. \n\nVector before filter: ";
+    QString result = "QtConcurrent::filter(), shows how to filter container by method. Method checks if value is bigger than 10. Method filter modify container passed as argument. \n\nVector before filter: ";
     QVector<int> array;
     qsrand( QTime::currentTime().msec() );
     for ( int i=0; i<10; ++i ) {
