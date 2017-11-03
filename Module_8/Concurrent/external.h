@@ -43,4 +43,9 @@ bool lessThen10(int value)
     return value < 10;
 }
 
+void addToDictionary(QStringList &dictionary, const QString &string)
+{
+    dictionary.append( string );
+}
+
 #endif // EXTERNAL_H

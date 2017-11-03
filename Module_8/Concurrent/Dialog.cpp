@@ -23,6 +23,7 @@ Dialog::Dialog(QWidget *parent)
     m_exampleBox->addItem( "QtConcurrent::run(aFunction)" );
     m_exampleBox->addItem( "QtConcurrent::filter()" );
     m_exampleBox->addItem( "Qt::Concurrent::filtered()" );
+    m_exampleBox->addItem( "Qt::Concurrent::filteredReduce()" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &Dialog::close );
     connect( m_runBtn, &QPushButton::clicked, this, &Dialog::runExample );
@@ -65,6 +66,9 @@ void Dialog::runExample()
     case 2:
         exampleFiltered();
         break;
+    case 3:
+        exampleFilteredReduce();
+        break;
     default:
         break;
     }
@@ -104,8 +108,24 @@ void Dialog::exampleFiltered()
 
     QFuture<QString> lowerStrings = QtConcurrent::filtered( strings, isLowerCase );
     m_resultView->setText(
-                "QtConcurrent:filtered(), show how to execute method in seperate thread. Method accepts QStringList and QFuture as a result returns QList<QString> with lower cap.\n\nUnfiltered strings: "
-                + strings.join(", ")
+                "QtConcurrent:filtered(), show how to execute method in seperate thread. "
+                "Method accepts QStringList and QFuture as a result returns QList<QString> with lower cap."
+                "\n\nUnfiltered strings: " + strings.join(", ")
                 + "\n\nFiltered strings: " + QStringList( lowerStrings.results() ).join(", ")
+                );
+}
+
+void Dialog::exampleFilteredReduce()
+{
+    QStringList strings;
+    strings << "small" << "Big" << "smaller" << "Bigger" << "smallest" << "Biggest";
+
+    QFuture<QStringList> dictionary = QtConcurrent::filteredReduced( strings, isLowerCase, addToDictionary );
+
+    m_resultView->setText(
+                "QtConcurrent::filteredReduce(), show how to execute method on seperate thread. "
+                "You need function that will filter container. Result is available from QFuture.\n\n"
+                "Unfiltered container: " + strings.join(", ")
+                + "\n\nFiltered container: " + dictionary.result().join(", ")
             );
 }

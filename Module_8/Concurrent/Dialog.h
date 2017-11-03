@@ -21,6 +21,7 @@ private:
     void exampleConcurrentRun();
     void exampleFilter();
     void exampleFiltered();
+    void exampleFilteredReduce();
 
 private:
     QPushButton *m_quitBtn;
