@@ -48,4 +48,9 @@ void addToDictionary(QStringList &dictionary, const QString &string)
     dictionary.append( string );
 }
 
+void multiply(int &number)
+{
+    number *= 2;
+}
+
 #endif // EXTERNAL_H

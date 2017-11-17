@@ -22,6 +22,7 @@ private:
     void exampleFilter();
     void exampleFiltered();
     void exampleFilteredReduce();
+    void exampleMap();
 
 private:
     QPushButton *m_quitBtn;
