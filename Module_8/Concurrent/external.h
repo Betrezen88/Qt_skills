@@ -53,4 +53,9 @@ void multiply(int &number)
     number *= 2;
 }
 
+int multiplyBy2(const int &number)
+{
+    return number * 2;
+}
+
 #endif // EXTERNAL_H
