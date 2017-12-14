@@ -26,6 +26,7 @@ Dialog::Dialog(QWidget *parent)
     m_exampleBox->addItem( "QtConcurrent::filteredReduce()" );
     m_exampleBox->addItem( "QtConcurrent::map()" );
     m_exampleBox->addItem( "QtConcurrent::mapped()" );
+    m_exampleBox->addItem( "QtConcurrent::mappedReduced()" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &Dialog::close );
     connect( m_runBtn, &QPushButton::clicked, this, &Dialog::runExample );
@@ -76,6 +77,9 @@ void Dialog::runExample()
         break;
     case 5:
         exampleMapped();
+        break;
+    case 6:
+        exampleMappedReduced();
         break;
     default:
         break;
@@ -175,6 +179,25 @@ void Dialog::exampleMapped()
     result += "\n\nQVector after: ";
     foreach ( int num, future.results() )
         result += QString::number( num ) + ", ";
+
+    m_resultView->setText( result );
+}
+
+void Dialog::exampleMappedReduced()
+{
+    QString result = "QtConcurrent::mappedReduced(), shows how to execute map method in seperate thread "
+                     "on container, and . It works like map(), which means it modify given container. Here "
+                     "we have QVector<int>() that values will be modifed by method multiplyBy2(). Next all "
+                     "elements are added up.\n\n"
+                     "QVector<int>: ";
+    QVector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+    for ( int i=0; i<numbers.size(); ++i )
+        result += QString::number( numbers.at(i) ) + ", ";
+
+    QFuture<int> num = QtConcurrent::mappedReduced(numbers, multiplyBy2, calculate);
+
+    result += "\n\nSum: " + QString::number( num.result() );
 
     m_resultView->setText( result );
 }

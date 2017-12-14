@@ -24,6 +24,7 @@ private:
     void exampleFilteredReduce();
     void exampleMap();
     void exampleMapped();
+    void exampleMappedReduced();
 
 private:
     QPushButton *m_quitBtn;

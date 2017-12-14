@@ -58,4 +58,9 @@ int multiplyBy2(const int &number)
     return number * 2;
 }
 
+void calculate(int &result, const int &element)
+{
+    result += element;
+}
+
 #endif // EXTERNAL_H
