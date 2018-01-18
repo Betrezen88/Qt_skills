@@ -33,4 +33,34 @@ QString myFunction()
     return result;
 }
 
+bool isLowerCase(const QString &string)
+{
+    return string.toLower() == string;
+}
+
+bool lessThen10(int value)
+{
+    return value < 10;
+}
+
+void addToDictionary(QStringList &dictionary, const QString &string)
+{
+    dictionary.append( string );
+}
+
+void multiply(int &number)
+{
+    number *= 2;
+}
+
+int multiplyBy2(const int &number)
+{
+    return number * 2;
+}
+
+void calculate(int &result, const int &element)
+{
+    result += element;
+}
+
 #endif // EXTERNAL_H

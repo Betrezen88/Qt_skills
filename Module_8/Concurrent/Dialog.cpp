@@ -6,8 +6,10 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QFuture>
 #include <QString>
+#include <QStringList>
+#include <QTime>
 
-//extern QString function();
+#include <QDebug>
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -19,6 +21,12 @@ Dialog::Dialog(QWidget *parent)
 
     m_resultView->setReadOnly( true );
     m_exampleBox->addItem( "QtConcurrent::run(aFunction)" );
+    m_exampleBox->addItem( "QtConcurrent::filter()" );
+    m_exampleBox->addItem( "QtConcurrent::filtered()" );
+    m_exampleBox->addItem( "QtConcurrent::filteredReduce()" );
+    m_exampleBox->addItem( "QtConcurrent::map()" );
+    m_exampleBox->addItem( "QtConcurrent::mapped()" );
+    m_exampleBox->addItem( "QtConcurrent::mappedReduced()" );
 
     connect( m_quitBtn, &QPushButton::clicked, this, &Dialog::close );
     connect( m_runBtn, &QPushButton::clicked, this, &Dialog::runExample );
@@ -40,6 +48,7 @@ Dialog::Dialog(QWidget *parent)
     all->addLayout( exampleL );
     all->addLayout( buttonsL );
 
+    setMinimumSize(500, 500);
     setLayout( all );
 }
 
@@ -54,6 +63,24 @@ void Dialog::runExample()
     case 0:
         exampleConcurrentRun();
         break;
+    case 1:
+        exampleFilter();
+        break;
+    case 2:
+        exampleFiltered();
+        break;
+    case 3:
+        exampleFilteredReduce();
+        break;
+    case 4:
+        exampleMap();
+        break;
+    case 5:
+        exampleMapped();
+        break;
+    case 6:
+        exampleMappedReduced();
+        break;
     default:
         break;
     }
@@ -63,4 +90,114 @@ void Dialog::exampleConcurrentRun()
 {
     QFuture<QString> future = QtConcurrent::run( myFunction );
     m_resultView->setText( future.result() );
+}
+
+void Dialog::exampleFilter()
+{
+    QString result = "QtConcurrent::filter(), shows how to filter container by method. Method checks if value is bigger than 10. Method filter modify container passed as argument. \n\nVector before filter: ";
+    QVector<int> array;
+    qsrand( QTime::currentTime().msec() );
+    for ( int i=0; i<10; ++i ) {
+        array.append( qrand() % 20 + 1 );
+        result += QString::number( array.at(i) ) + ", ";
+    }
+
+    QFuture<void> future = QtConcurrent::filter( array, lessThen10 );
+
+    future.waitForFinished();
+
+    result += "\n\nVector after filter: ";
+    for( int i=0; i<array.size(); ++i )
+        result += QString::number( array.at(i) ) + ", ";
+
+    m_resultView->setText( result );
+}
+
+void Dialog::exampleFiltered()
+{
+    QStringList strings;
+    strings << "small" << "Big" << "smaller" << "Bigger" << "smallest" << "Biggest";
+
+    QFuture<QString> lowerStrings = QtConcurrent::filtered( strings, isLowerCase );
+    m_resultView->setText(
+                "QtConcurrent:filtered(), show how to execute method in seperate thread. "
+                "Method accepts QStringList and QFuture as a result returns QList<QString> with lower cap."
+                "\n\nUnfiltered strings: " + strings.join(", ")
+                + "\n\nFiltered strings: " + QStringList( lowerStrings.results() ).join(", ")
+                );
+}
+
+void Dialog::exampleFilteredReduce()
+{
+    QStringList strings;
+    strings << "small" << "Big" << "smaller" << "Bigger" << "smallest" << "Biggest";
+
+    QFuture<QStringList> dictionary = QtConcurrent::filteredReduced( strings, isLowerCase, addToDictionary );
+
+    m_resultView->setText(
+                "QtConcurrent::filteredReduce(), show how to execute method on seperate thread. "
+                "You need function that will filter container. Result is available from QFuture.\n\n"
+                "Unfiltered container: " + strings.join(", ")
+                + "\n\nFiltered container: " + dictionary.result().join(", ")
+                );
+}
+
+void Dialog::exampleMap()
+{
+    QString result = "QtConcurrent:map(), shows how to execute method in seperate thread "
+                     "on container. Here we have QVector<int>() that values will be miltiplyed by 2.\n\n"
+                     "QVector before: ";
+    QVector<int> numbers = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+    foreach ( int num, numbers )
+        result += QString::number( num ) + ", ";
+
+    QFuture<void> future = QtConcurrent::map( numbers, multiply );
+
+    future.waitForFinished();
+
+    result += "\n\nQVector after:";
+    foreach ( int num, numbers )
+        result += QString::number( num ) + ", ";
+
+    m_resultView->setText( result );
+}
+
+void Dialog::exampleMapped()
+{
+    QString result = "QtConcurrent::mapped(), shows how to execute method in seperate thread "
+                     "on container. It works like map(), but creates seperate container for changes. "
+                     "Here we have QVector<int>() that values will be myltiplyed by 2.\n\n"
+                     "QVector before: ";
+    QVector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+    foreach ( int num, numbers )
+        result += QString::number( num ) + ", ";
+
+    QFuture<int> future = QtConcurrent::mapped( numbers, multiplyBy2 );
+
+    result += "\n\nQVector after: ";
+    foreach ( int num, future.results() )
+        result += QString::number( num ) + ", ";
+
+    m_resultView->setText( result );
+}
+
+void Dialog::exampleMappedReduced()
+{
+    QString result = "QtConcurrent::mappedReduced(), shows how to execute map method in seperate thread "
+                     "on container, and . It works like map(), which means it modify given container. Here "
+                     "we have QVector<int>() that values will be modifed by method multiplyBy2(). Next all "
+                     "elements are added up.\n\n"
+                     "QVector<int>: ";
+    QVector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+    for ( int i=0; i<numbers.size(); ++i )
+        result += QString::number( numbers.at(i) ) + ", ";
+
+    QFuture<int> num = QtConcurrent::mappedReduced(numbers, multiplyBy2, calculate);
+
+    result += "\n\nSum: " + QString::number( num.result() );
+
+    m_resultView->setText( result );
 }

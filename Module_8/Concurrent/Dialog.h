@@ -19,6 +19,12 @@ private slots:
 
 private:
     void exampleConcurrentRun();
+    void exampleFilter();
+    void exampleFiltered();
+    void exampleFilteredReduce();
+    void exampleMap();
+    void exampleMapped();
+    void exampleMappedReduced();
 
 private:
     QPushButton *m_quitBtn;
